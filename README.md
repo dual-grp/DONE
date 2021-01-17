@@ -1,7 +1,7 @@
 # DONE: Distributed Approximate Newton-type Method for Federated Edge Learning.
 
 This repository is for the Experiment Section of the paper:
-"DONE: Distributed Newton Method for Federated Edge Learning"
+"DONE: Distributed Approximate Newton-type Method for Federated Edge Learning"
 
 # Software requirements:
 - numpy, scipy, pytorch, Pillow, matplotlib.
