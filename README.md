@@ -27,6 +27,24 @@ Link: https://arxiv.org/pdf/2012.05625.pdf
 - There is a main file "main.py" which allows running all experiments, and 2 files: "plot_mnist.py", "plot_synthetic.py" to plot all results after runing all experiment.  Only run "plot_mnist.py" and "plot_synthetic.py" after getting the results from training process.
 
 ## Performance comparison with different distributed algorithms (table 2 in our paper)
+                | Dataset | Algorithm | Alpha(gamma) | Test Accurancy |
+                |---------|-----------|--------------|----------------|
+                |  Mnist  | DONE      | 0.03         |  92.11 ± 0.01  |
+                |         | DANE      | 0.04         |  91.84 ± 0.02  |
+                |         | Newton    | 0.03         |  92.11 ± 0.01  |
+                |         | GD        | 0.2          |  91.35 ± 0.03  |
+                |---------|-----------|--------------|----------------|
+                | FEMNIST | DONE      | 0.01         |  80.60 ± 0.02  |
+                |         | DANE      | 0.02         |  77.57 ± 0.07  |
+                |         | Newton    | 0.01         |  80.60 ± 0.02  |
+                |         | GD        | 0.02         |  60.58 ± 0.03  |
+                |---------|-----------|--------------|----------------|
+                |  Human  | DONE      | 0.02         |  96.78 ± 0.01  |
+                | Activity| DANE      | 0.05         |  95.82 ± 0.02  |
+                |         | Newton    | 0.02         |  96.78 ± 0.01  |
+                |         | Newton    | 0.03         |  96.90 ± 0.01  |
+                |         | GD        | 0.1          |  80.02 ± 0.03  |
+                |---------|-----------|--------------|----------------|
 - For MNIST:
       <pre><code>
       python3 main.py --dataset Mnist --model mclr --algorithm DONE --batch_size 0 --alpha 0.04 --num_global_iters 100 --local_epochs 40 --numedges 32
