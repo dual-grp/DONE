@@ -3,6 +3,10 @@
 This repository is for the Experiment Section of the paper:
 "DONE: Distributed Approximate Newton-type Method for Federated Edge Learning"
 
+Authors: Canh T. Dinh, Nguyen H. Tran, Tuan Dung Nguyen, Wei Bao, Amir Rezaei Balef
+
+Paper Link: https://arxiv.org/pdf/2012.05625.pdf
+
 # Software requirements:
 - numpy, scipy, pytorch, Pillow, matplotlib.
 
