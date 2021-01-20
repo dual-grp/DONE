@@ -14,7 +14,7 @@ Paper Link: https://arxiv.org/pdf/2012.05625.pdf
 
 - The code can be run on any pc.
 
-# Dataset: We use 2 datasets: MNIST, Human Activity, and Synthetic
+# Dataset: We use 4 datasets: MNIST, Human Activity, FEMNIST, and Synthetic
 
 - To generate non-idd MNIST Data: 
   - Access data/Mnist and run: "python3 generate_niid_32users.py"
@@ -22,6 +22,9 @@ Paper Link: https://arxiv.org/pdf/2012.05625.pdf
   
 - To generate Human Activity Data: 
   - Access data/human_activity and run: "python3 human_acitity_generation"
+
+- To generate FEMNISTy Data: 
+  - Access Nist/human_activity and run: "python3 generate_niid_nist_32users.py"
 
 - To generate non-iid Synthetic:
   - Access data/Linear_synthetic and run: "python3 generate_niid_linear_32users_updated.py". Synthetic data is configurable with the number of users, the numbers of labels for each user, and the value of $\kappa$.
