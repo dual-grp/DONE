@@ -32,7 +32,7 @@ Paper Link: https://arxiv.org/pdf/2012.05625.pdf
 - The datasets also are available to download at: https://drive.google.com/drive/folders/1LkBjkP0PzfRNiAY9ImN85r9vBIuW4U6-?usp=sharing
 
 # Produce experiments and figures
-- There is a main file "main.py" which allows running all experiments, and 2 files: "plot_mnist.py", "plot_synthetic.py" to plot all results after runing all experiment.  Only run "plot_mnist.py" and "plot_synthetic.py" after getting the results from training process.
+- There is a main file "main.py" which allows running all experiments, and 2 files: "main_plot_mnist.py", "main_plot_synthetic.py" to plot all results after runing all experiment.  Only run "plot_mnist.py" and "plot_synthetic.py" after getting the results from training process.
 
 ## Performance comparison with different distributed algorithms (table 2 in our paper)
                           | Dataset | Algorithm | Alpha(gamma) | Test Accurancy |
