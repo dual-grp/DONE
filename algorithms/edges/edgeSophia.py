@@ -6,9 +6,9 @@ from torch.functional import F
 
 class edgeSophia(Edgebase):
     def __init__(self, device, numeric_id, train_data, test_data, model, batch_size, learning_rate, betas, rho,
-                 weight_decay, L, local_epochs, optimizer):
+                 L, local_epochs, optimizer):
         super().__init__(device, numeric_id, train_data, test_data, model[0], batch_size, learning_rate, betas, rho,
-                 weight_decay, L, local_epochs)
+                         L, local_epochs)
 
         self.pre_params = []
         if (model[1] == "linear_regression"):
@@ -57,3 +57,11 @@ class edgeSophia(Edgebase):
                 loss_sampled.backward()
                 self.optimizer.update_hessian()
                 self.optimizer.zero_grad(set_to_none=True)
+
+
+    def send_grad(self):
+        return copy.deepcopy(self.m)
+
+
+    def send_hessian(self):
+        return copy.deepcopy(self.h)
