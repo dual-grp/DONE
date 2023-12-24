@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 from algorithms.edges.edgebase import Edgebase
 from algorithms.optimizers.optimizer import *
+from torch.functional import F
 
 class edgeSophia(Edgebase):
     def __init__(self, device, numeric_id, train_data, test_data, model, batch_size, learning_rate, betas, rho,
@@ -18,10 +19,11 @@ class edgeSophia(Edgebase):
             self.loss = nn.NLLLoss()
 
         self.optimizer = sophiag(self.model.parameters(), lr=learning_rate, betas=betas, rho=rho,
-                 weight_decay=weight_decay, maximize=False, capturable= False)
+                                 weight_decay=weight_decay, maximize=False, capturable=False)
         # Keep track of local hessians and exp_avg
         self.m = []
         self.h = []
+        self.k = 4
         for group in self.optimizer.param_groups:
             for param in group['params']:
                 self.m.append(torch.zeros_like(param, memory_format=torch.preserve_format))
@@ -32,13 +34,26 @@ class edgeSophia(Edgebase):
     def train(self, epochs, glob_iter):
         self.model.train()
         # Only update once time
-        for X, y in self.trainloaderfull:
+        for i, (X, y) in zip(range(1), self.trainloaderfull):
             X, y = X.to(self.device), y.to(self.device)
             self.model.train()
-            #loss_per_epoch = 0
-            # Sample a mini-batch (D_i)
-            self.optimizer.zero_grad()
-            output = self.model(X)
-            loss = self.loss(output, y)
-            loss.backward()
+
             self.optimizer.step()
+            logits = self.model(X)
+            loss = self.loss(logits, y)
+            loss.backward()
+            self.optimizer.step(bs=self.batch_size)
+            self.m, self.h = self.optimizer.get_m_h()
+            self.optimizer.zero_grad(set_to_none=True)
+
+            if glob_iter % self.k != self.k - 1:
+                continue
+            else:
+                # update hessian EMA
+                logits = self.model(X)
+                samp_dist = torch.distributions.Categorical(logits=logits)
+                y_sample = samp_dist.sample()
+                loss_sampled = F.cross_entropy(logits.view(-1, logits.size(-1)), y_sample.view(-1), ignore_index=-1)
+                loss_sampled.backward()
+                self.optimizer.update_hessian()
+                self.optimizer.zero_grad(set_to_none=True)

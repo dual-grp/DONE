@@ -12,6 +12,7 @@ from algorithms.edges.edgeNewton import edgeNewton
 from algorithms.edges.edgeAvg import edgeAvg
 from algorithms.edges.edgeGT import edgeGT
 from algorithms.edges.edgePGT import edgePGT
+from algorithms.edges.edgeSophia import edgeSophia
 
 from algorithms.server.serverbase import ServerBase
 from utils.model_utils import read_data, read_edge_data
@@ -70,6 +71,9 @@ class Server(ServerBase):
                 edge = edgeGT(device, id, train, test, model, batch_size, learning_rate, alpha, eta, L, local_epochs, optimizer)
             if(algorithm == "PGT"):
                 edge = edgePGT(device, id, train, test, model, batch_size, learning_rate, alpha, eta, L, local_epochs, optimizer)
+            if (algorithm == "Sophia"):
+                edge = edgeSophia(device, id, train, test, model, batch_size, learning_rate, betas, rho, weight_decay, local_epochs,
+                               optimizer)
             
             self.edges.append(edge)
             self.total_train_samples += edge.train_samples

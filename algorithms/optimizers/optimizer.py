@@ -5,6 +5,7 @@ import torch
 from torch import Tensor
 from typing import List, Optional
 import math
+import copy
 
 class MySGD(Optimizer):
     def __init__(self, params, lr):
@@ -184,6 +185,8 @@ class SophiaG(Optimizer):
         defaults = dict(lr=lr, betas=betas, rho=rho,
                         weight_decay=weight_decay,
                         maximize=maximize, capturable=capturable)
+        self.m = []
+        self.h = []
         super(SophiaG, self).__init__(params, defaults)
 
     def __setstate__(self, state):
@@ -196,6 +199,8 @@ class SophiaG(Optimizer):
         if not step_is_tensor:
             for s in state_values:
                 s['step'] = torch.tensor(float(s['step']))
+
+
 
     @torch.no_grad()
     def update_hessian(self):
@@ -212,18 +217,17 @@ class SophiaG(Optimizer):
                     state['exp_avg'] = torch.zeros_like(p, memory_format=torch.preserve_format)
                     state['hessian'] = torch.zeros_like(p, memory_format=torch.preserve_format)
 
+
                 if 'hessian' not in state.keys():
                     state['hessian'] = torch.zeros_like(p, memory_format=torch.preserve_format)
 
                 state['hessian'].mul_(beta2).addcmul_(p.grad, p.grad, value=1 - beta2)
 
+
     @torch.no_grad()
+    def get_m_h(self):
+        return self.m, self.h
 
-    def get_hessian(self):
-        m = []
-        h = []
-
-        return
 
     @torch.no_grad()
     def step(self, closure=None, bs=5120):
@@ -265,6 +269,8 @@ class SophiaG(Optimizer):
 
                 if self.defaults['capturable']:
                     bs = torch.ones((1,), dtype=torch.float, device=p.device) * bs
+            self.m = copy.deepcopy(exp_avgs)
+            self.h = copy.deepcopy(hessian)
 
             sophiag(params_with_grad,
                     grads,

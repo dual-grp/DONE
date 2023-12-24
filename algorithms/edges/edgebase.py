@@ -33,10 +33,10 @@ class Edgebase:
         self.eta = eta
         self.L = L
         self.local_epochs = local_epochs
-        self.trainloader = DataLoader(train_data, self.batch_size)
+        self.trainloader = DataLoader(train_data, self.batch_size, shuffle=True)
         self.testloader = DataLoader(test_data, self.batch_size)
         self.testloaderfull = DataLoader(test_data, self.test_samples)
-        self.trainloaderfull = DataLoader(train_data, self.train_samples)
+        self.trainloaderfull = DataLoader(train_data, self.train_samples, shuffle=True)
         self.iter_trainloader = iter(self.trainloader)
         self.iter_testloader = iter(self.testloader)
 
