@@ -15,14 +15,14 @@ class edgeGD(Edgebase):
         elif model[1] == "logistic_regression":
             self.loss = nn.BCELoss()
         else:
-            self.loss = nn.NLLLoss()
+            self.loss = nn.CrossEntropyLoss()
 
         self.optimizer =  torch.optim.SGD(self.model.parameters(), lr=self.learning_rate)
 
     def train(self, epochs, glob_iter):
         self.model.train()
         # Only update once time
-        for X, y in self.trainloaderfull:
+        for i, (X, y) in zip(range(1), self.trainloaderfull):
             X, y = X.to(self.device), y.to(self.device)
             self.model.train()
             #loss_per_epoch = 0

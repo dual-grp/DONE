@@ -61,7 +61,7 @@ class DNN(nn.Module):
         x = torch.flatten(x, 1)
         x = F.relu(self.fc1(x))
         x = self.fc2(x)
-        x = F.log_softmax(x, dim=1)
+        #x = F.log_softmax(x, dim=1)
         return x
 
 class Linear_Regression(nn.Module):

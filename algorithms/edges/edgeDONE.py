@@ -23,7 +23,7 @@ class edgeDONE(Edgebase):
         elif model[1] == "logistic_regression":
             self.loss = nn.BCELoss()
         else:
-            self.loss = nn.NLLLoss()
+            self.loss = nn.CrossEntropyLoss()
 
         self.optimizer = torch.optim.SGD(self.model.parameters(), lr=self.learning_rate)
 
@@ -36,7 +36,7 @@ class edgeDONE(Edgebase):
                 model_grad.grad = new_grads[idx].clone()
 
     def get_full_grad(self):
-        for X, y in self.trainloaderfull:
+        for X, y in self.trainloaderfull: #i, (X, y) in zip(range(1), self.trainloaderfull):
             X, y = (X.to(self.device), y.to(self.device))
             self.model.zero_grad()
             output = self.model(X)

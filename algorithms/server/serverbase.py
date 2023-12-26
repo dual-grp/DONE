@@ -158,11 +158,13 @@ class ServerBase:
         ids = [c.id for c in self.edges]
         #groups = [c.group for c in self.clients]
 
+
         return ids, num_samples, tot_correct, losses
 
     def evaluate(self):
         stats = self.test()  
         stats_train = self.train_error_and_loss()
+
 
         if(self.dataset == "Linear_synthetic"):
             glob_acc = (np.sum(stats[3])*1.0/len(stats[0])).item()
@@ -173,7 +175,7 @@ class ServerBase:
         train_acc = np.sum(stats_train[2])*1.0/np.sum(stats_train[1])
         # train_loss = np.dot(stats_train[3], stats_train[1])*1.0/np.sum(stats_train[1])
 
-        if self.algorithm == "FedAvg" or self.algorithm == "GD" or self.algorithm == "FEDL":
+        if self.algorithm == "FedAvg" or self.algorithm == "GD" or self.algorithm == "FEDL" or "Sophia":
             train_loss = sum([x * y for (x, y) in zip(stats_train[1], stats_train[3])]).item() / np.sum(stats_train[1])
         else:
             train_loss = (np.sum(stats_train[3])*1.0/len(stats_train[0])).item()

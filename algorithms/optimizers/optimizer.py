@@ -169,8 +169,8 @@ class Neumann(Optimizer):
 
 
 class SophiaG(Optimizer):
-    def __init__(self, params, lr=1e-4, betas=(0.965, 0.99), rho=0.04,
-                 weight_decay=1e-1, *, maximize: bool = False,
+    def __init__(self, params, lr=1e-4, betas=(0.9, 0.95), rho=20.0,
+                 weight_decay=1e-3, *, maximize: bool = False,
                  capturable: bool = False):
         if not 0.0 <= lr:
             raise ValueError("Invalid learning rate: {}".format(lr))

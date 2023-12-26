@@ -24,7 +24,10 @@ def main(experiment, dataset, algorithm, model, batch_size, learning_rate, alpha
         # Generate model
         if(model == "mclr"):
             if(dataset == "human_activity"):
-                model = Mclr_Logistic(561,6).to(device), model
+                if (algorithm != "Sophia"):
+                    model = Mclr_Logistic(561, 6).to(device), model
+                else:
+                    model = Mclr_CrossEntropy(561, 6).to(device), model
             else:
                 model = Mclr_Logistic().to(device), model
 

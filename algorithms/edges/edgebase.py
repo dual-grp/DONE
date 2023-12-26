@@ -101,6 +101,7 @@ class Edgebase:
                 test_acc += torch.sum(((output >= 0.5) == y).type(torch.int)).item()
             else:
                 test_acc += (torch.sum(torch.argmax(output, dim=1) == y)).item()
+
             loss += self.loss(output, y)
         return test_acc, loss, y.shape[0]
 
@@ -115,7 +116,11 @@ class Edgebase:
                 train_acc += torch.sum(((output >= 0.5) == y).type(torch.int)).item()
             else:
                 train_acc += (torch.sum(torch.argmax(output, dim=1) == y)).item()
+
+
             loss += self.loss(output, y)
+            #print(output, y)
+
         return train_acc, loss, self.train_samples
 
     def update_direction(self):
