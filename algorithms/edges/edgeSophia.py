@@ -17,7 +17,7 @@ class edgeSophia(Edgebase):
             self.loss = nn.BCELoss()
         else:
             self.loss = nn.CrossEntropyLoss()#nn.NLLLoss()
-        print(alpha, eta)
+        #print(alpha, eta)
         self.optimizer = SophiaG(self.model.parameters(), lr=learning_rate, betas=alpha, rho=eta,
                                  weight_decay=L, maximize=False, capturable=False)
         # Keep track of local hessians and exp_avg
